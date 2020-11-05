@@ -3,8 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
 </head>
 <body>
-
+<section class="layui-larry-box">
+    <div class="larry-personal">
+        <blockquote class="layui-elem-quote layui-text">
+            <span>Add Logistics</span>
+        </blockquote>
+        <form class="layui-form col-lg-5 " action="update-order" method="post">
+            <div class="layui-form-item">
+                <label class="layui-form-label">Order ID</label>
+                <div class="layui-input-block">
+                    <label>
+                        <input type="text" name="orderId" autocomplete="off" class="layui-input" value="">
+                    </label>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">Operation</label>
+                <div class="layui-input-block">
+                    <label>
+                        <input type="text" name="operation" autocomplete="off" class="layui-input" value="">
+                    </label>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">Operator</label>
+                <div class="layui-input-block">
+                    <label>
+                        <input type="text" name="operator" autocomplete="off" class="layui-input" value="">
+                    </label>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">Operation Address</label>
+                <div class="layui-input-block">
+                    <label>
+                        <input type="text" name="address" autocomplete="off" class="layui-input" value="">
+                    </label>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">Comment</label>
+                <div class="layui-input-block">
+                    <label>
+                        <input type="text" name="details" autocomplete="off" class="layui-input" value="">
+                    </label>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">Add</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">Clear</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
 </body>
+<script type="text/javascript" src="layui/layui.js"></script>
 </html>

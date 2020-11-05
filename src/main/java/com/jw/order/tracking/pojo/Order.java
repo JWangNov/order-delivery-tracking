@@ -30,13 +30,13 @@ public class Order {
 
 
     /**
-     * shipped (or will be shipped) from who
+     * shipped (or will be shipped) from whom
      */
     private String shipper;
     /**
      * shipped (or will be shipped) from where
      */
-    private String shippingAddress;
+    private String shipperAddress;
     /**
      * phone number of the shipper
      */
@@ -46,15 +46,15 @@ public class Order {
     /**
      * shipped (or will be shipped) to whom
      */
-    private String receiver;
+    private String recipient;
     /**
      * shipped (or will be shipped) to where
      */
-    private String receiverAddress;
+    private String recipientAddress;
     /**
-     * phone number of the shipper
+     * phone number of the recipient
      */
-    private long receiverPhone;
+    private long recipientPhone;
 
 
     /**

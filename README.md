@@ -1,2 +1,4 @@
-# order-delivery-tracking
- An order delivery tracking system based on SpringBoot and MongoDB
+# Order Delivery Tracking System
+
+An order delivery tracking system based on SpringBoot and MongoDB.
+

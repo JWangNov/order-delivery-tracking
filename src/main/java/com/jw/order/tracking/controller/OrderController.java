@@ -41,4 +41,9 @@ public class OrderController {
     public Order getOrderById(int id) {
         return orderService.getOrderById(id);
     }
+
+    @GetMapping("delete-order-by-id")
+    public String deleteOrderById(int id) {
+        return orderService.deleteOrderById(id) ? "success delete" : "fail delete";
+    }
 }

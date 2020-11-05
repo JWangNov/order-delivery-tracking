@@ -33,11 +33,11 @@ public class Logistics {
      */
     private String operator;
     /**
-     * current address
+     * Operation address
      */
     private String address;
     /**
-     * detailed info
+     * detailed info (comment)
      */
     private String details;
 

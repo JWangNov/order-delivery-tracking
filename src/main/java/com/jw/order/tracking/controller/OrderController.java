@@ -1,6 +1,7 @@
 package com.jw.order.tracking.controller;
 
 import com.jw.order.tracking.common.OrderStatus;
+import com.jw.order.tracking.pojo.Logistics;
 import com.jw.order.tracking.pojo.Order;
 import com.jw.order.tracking.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +26,13 @@ public class OrderController {
                 .setOrderTime(new Date())
                 .setShipTime(new Date());
         orderService.addOrder(order);
-        return "success adding the order";
+        return "add success";
+    }
+
+    @PostMapping("update-order")
+    public String updateOrder(Logistics logistics) {
+        logistics.setOperationTime(new Date());
+        orderService.addLogisticsAndUpdateStatus(logistics);
+        return "update success";
     }
 }

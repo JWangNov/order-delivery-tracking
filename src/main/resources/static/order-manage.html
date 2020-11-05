@@ -3,8 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
 </head>
 <body>
-
+<blockquote class="layui-elem-quote layui-text">
+    <span>Manage Orders</span>
+</blockquote>
+<div class="layui-form-item">
+    <div class="layui-inline">
+        <label class="layui-form-label">Order ID</label>
+        <div class="layui-input-inline">
+            <label for="orderId"></label>
+            <input type="tel" name="orderId" id="orderId" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <button class="layui-btn" id="search" onclick="search()">Search</button>
+    <br>
+    <div style="padding: 20px; background-color: #F2F2F2;">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md6">
+                <div class="layui-card">
+                    <div class="layui-card-header" id="order"></div>
+                    <div class="layui-card-body" id="orderBody"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul class="layui-timeline" id="timezhou">
+    </ul>
+</div>
 </body>
+<script type="text/javascript" src="layui/layui.js"></script>
+<script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript">
+    function search() {
+        const orderId = $("#orderId").val();
+        $("#orderBody").html('');
+        $("#timezhou").html('');
+        $.ajax({
+            url: "get-order-by-id",
+            data: {
+                'id': orderId
+            },
+            method: 'GET',
+            success: function (order) {
+                $("#order").html('Order ID: ' + orderId + ' - (' + order['status'] + ')');
+                $("#orderBody").append(
+                    'Order Time: ' + order['orderTime'] +
+                    '<br>' +
+                    '<br>Shipper\'s Name: ' + order['shipper'] +
+                    '<br>Shipper\'s Phone: ' + order['shipperPhone'] +
+                    '<br>Shipper\'s Address: ' + order['shipperAddress'] +
+                    '<br>Recipient\'s Name: ' + order['recipient'] +
+                    '<br>Recipient\'s Phone: ' + order['recipientPhone'] +
+                    '<br>Recipient\'s Address: ' + order['recipientAddress']
+                );
+                const logistics = order['logistics'];
+                console.log(logistics);
+                for (let i = logistics.length - 1; i >= 0; i--) {
+                    console.log(logistics[i]);
+                    $("#timezhou").append('<li class="layui-timeline-item">' +
+                        // &#xe63f; is used as the symbol of a green circle in LayUI
+                        '<i class="layui-icon layui-timeline-axis">&#xe63f;</i>' +
+                        '<div class="layui-timeline-content layui-text">' +
+                        '<h3 class="layui-timeline-title">' + '(' + logistics[i].operation + ') - ' + logistics[i].operationTime +
+                        '</h3><p>' + logistics[i].operator + ' - ' + logistics[i].details + '<br>' + logistics[i].address +
+                        '</p></div></li>'
+                    );
+                }
+            },
+            error: function (order) {
+                layer.msg(order)
+            }
+        })
+    }
+</script>
 </html>

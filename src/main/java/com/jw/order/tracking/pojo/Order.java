@@ -1,6 +1,7 @@
 package com.jw.order.tracking.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.jw.order.tracking.common.MyFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -59,12 +60,12 @@ public class Order {
     /**
      * order time
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = MyFormat.DATE_JSON)
     private Date orderTime;
     /**
      * shipped time
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = MyFormat.DATE_JSON)
     private Date shipTime;
 
 

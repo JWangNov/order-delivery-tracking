@@ -24,17 +24,21 @@ public class OrderController {
     public String addOrder(Order order) {
         // FIXME: for now, we simplify this part
         //  once added an order, mark it as "shipped", and set the ship time as current time
+        Date date = new Date();
         order.setStatus(OrderStatus.SHIPPED)
-                .setOrderTime(new Date())
-                .setShipTime(new Date());
+                .setOrderTime(date)
+                .setShipTime(date);
         orderService.addOrder(order);
+        log.info("[addOrder] add order #{}", order.getId());
         return "add success";
     }
 
     @PostMapping("update-order")
     public String updateOrder(Logistics logistics) {
-        logistics.setOperationTime(new Date());
+        Date date = new Date();
+        logistics.setOperationTime(date);
         orderService.addLogisticsAndUpdateStatus(logistics);
+        log.info("[updateOrder] update order #{}, operation: {}", logistics.getOrderId(), logistics.getOperation());
         return "update success";
     }
 
@@ -45,7 +49,18 @@ public class OrderController {
 
     @GetMapping("delete-order-by-id")
     public String deleteOrderById(int id) {
-        return orderService.deleteOrderById(id) ? "success delete" : "fail delete";
+        // if (orderService.deleteOrderById(id)){
+        //     return "success delete";
+        // }
+        // return "fail delete";
+        boolean isDeleted = orderService.deleteOrderById(id);
+        if (isDeleted) {
+            log.info("[deleteOrderById] successfully delete order #{}", id);
+            return "success delete";
+        } else {
+            log.debug("[deleteOrderById] failed to delete order #{}", id);
+            return "fail delete";
+        }
     }
 
     @GetMapping("get-all-order")

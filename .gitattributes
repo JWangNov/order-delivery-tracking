@@ -1,2 +1,13 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Denote generated files
+mvnw linguist-generated
+mvnw.cmd linguist-generated
+
+# Denote document files
+document/* linguist-documentation
+
+# Denote vendored files
+src/main/resources/static/js/* linguist-vendored
+src/main/resources/static/layui/* linguist-vendored

@@ -24,15 +24,17 @@ public class OrderService {
     }
 
     public void addLogisticsAndUpdateStatus(Logistics logistics) {
+        Query query = Query.query(Criteria.where("_id").is(logistics.getOrderId()));
         Update update = new Update()
                 // use the operation of logistics as order status update
                 .set("status", logistics.getOperation())
                 .push("logistics", logistics);
-        mongoTemplate.upsert(
-                Query.query(Criteria.where("_id").is(logistics.getOrderId())),
-                update,
-                Order.class,
-                COLLECTION_NAME_ORDER
-        );
+        mongoTemplate.upsert(query, update, Order.class, COLLECTION_NAME_ORDER);
+    }
+
+    public Order getOrderById(int id) {
+        // Query query = Query.query(Criteria.where("_id").is(id));
+        // return mongoTemplate.findOne(query, Order.class, COLLECTION_NAME_ORDER);
+        return mongoTemplate.findById(id, Order.class, COLLECTION_NAME_ORDER);
     }
 }

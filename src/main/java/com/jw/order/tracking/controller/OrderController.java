@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -45,5 +46,15 @@ public class OrderController {
     @GetMapping("delete-order-by-id")
     public String deleteOrderById(int id) {
         return orderService.deleteOrderById(id) ? "success delete" : "fail delete";
+    }
+
+    @GetMapping("get-all-order")
+    public Map<String, Object> getAllOrder() {
+        var list = orderService.getAllOrder();
+        return Map.of(
+                "code", 0,
+                "count", list.size(),
+                "data", list
+        );
     }
 }

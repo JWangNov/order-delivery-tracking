@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+</head>
+<body>
+<section class="layui-larry-box">
+    <div class="larry-personal">
+        <blockquote class="layui-elem-quote layui-text">
+            <span>Add An Order</span>
+        </blockquote>
+        <form class="layui-form col-lg-5 " action="add-order" method="post">
+            <div class="layui-form-item">
+                <label class="layui-form-label">Order ID</label>
+                <div class="layui-input-block">
+                    <label>
+                        <input type="text" name="id" autocomplete="off" class="layui-input" value="">
+                    </label>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">Shipper's Name</label>
+                <div class="layui-input-block">
+                    <label>
+                        <input type="text" name="shipper" autocomplete="off" class="layui-input" value="">
+                    </label>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">Shipper's Address</label>
+                <div class="layui-input-block">
+                    <label>
+                        <input type="text" name="shipperAddress" autocomplete="off" class="layui-input" value="">
+                    </label>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">Shipper's Phone</label>
+                <div class="layui-input-block">
+                    <label>
+                        <input type="text" name="shipperPhone" autocomplete="off" class="layui-input" value="">
+                    </label>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">Recipient's Name</label>
+                <div class="layui-input-block">
+                    <label>
+                        <input type="text" name="recipient" autocomplete="off" class="layui-input" value="">
+                    </label>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">Recipient's Address</label>
+                <div class="layui-input-block">
+                    <label>
+                        <input type="text" name="recipientAddress" autocomplete="off" class="layui-input" value="">
+                    </label>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">Recipient's Phone</label>
+                <div class="layui-input-block">
+                    <label>
+                        <input type="text" name="recipientPhone" autocomplete="off" class="layui-input" value="">
+                    </label>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">Add</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">Clear</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</section>
+</body>
+<script type="text/javascript" src="layui/layui.js"></script>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+</head>
+<body>
+<blockquote class="layui-elem-quote layui-text">
+    <span>Manage Orders</span>
+</blockquote>
+<div class="layui-form-item">
+    <div class="layui-inline">
+        <label class="layui-form-label">Order ID</label>
+        <div class="layui-input-inline">
+            <label for="orderId"></label>
+            <input type="tel" name="orderId" id="orderId" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <button class="layui-btn" id="search" onclick="search()">Search</button>
+    <br>
+    <div style="padding: 20px; background-color: #F2F2F2;">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md6">
+                <div class="layui-card">
+                    <div class="layui-card-header" id="order"></div>
+                    <div class="layui-card-body" id="orderBody"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul class="layui-timeline" id="timezhou"></ul>
+    <div class="larry-personal-body clearfix">
+        <table class="layui-hide" id="orderTable" lay-filter="orderTable"></table>
+    </div>
+</div>
+</body>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">Filter & Export</button>
+    </div>
+</script>
+<script type="text/html" id="barDemo">
+    <!--<a class="layui-btn layui-btn-xs" lay-event="edit">Edit</a>-->
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">Delete</a>
+</script>
+<script type="text/javascript" src="layui/layui.js"></script>
+<script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript">
+    function search() {
+        const orderId = $("#orderId").val();
+        $("#orderBody").html('');
+        $("#timezhou").html('');
+        $.ajax({
+            url: "get-order-by-id",
+            data: {
+                'id': orderId
+            },
+            method: 'GET',
+            success: function (order) {
+                $("#order").html('Order ID: ' + orderId + ' - (' + order['status'] + ')');
+                $("#orderBody").append(
+                    'Order Time: ' + order['orderTime'] +
+                    '<br>' +
+                    '<br>Shipper\'s Name: ' + order['shipper'] +
+                    '<br>Shipper\'s Phone: ' + order['shipperPhone'] +
+                    '<br>Shipper\'s Address: ' + order['shipperAddress'] +
+                    '<br>Recipient\'s Name: ' + order['recipient'] +
+                    '<br>Recipient\'s Phone: ' + order['recipientPhone'] +
+                    '<br>Recipient\'s Address: ' + order['recipientAddress']
+                );
+                const logistics = order['logistics'];
+                console.log(logistics);
+                for (let i = logistics.length - 1; i >= 0; i--) {
+                    console.log(logistics[i]);
+                    $("#timezhou").append('<li class="layui-timeline-item">' +
+                        // &#xe63f; is used as the symbol of a green circle in LayUI
+                        '<i class="layui-icon layui-timeline-axis">&#xe63f;</i>' +
+                        '<div class="layui-timeline-content layui-text">' +
+                        '<h3 class="layui-timeline-title">' + '(' + logistics[i].operation + ') - ' + logistics[i].operationTime +
+                        '</h3><p>' + logistics[i].operator + ' - ' + logistics[i].details + '<br>' + logistics[i].address +
+                        '</p></div></li>'
+                    );
+                }
+            },
+            error: function (order) {
+                layer.msg(order)
+            }
+        })
+    }
+
+    layui.use('table', function () {
+        const table = layui.table;
+        table.render({
+            elem: '#orderTable'
+            , url: 'get-all-order'
+            , page: false
+            , toolbar: '#toolbarDemo'
+            // , cols: [[
+            //     {field: 'id', title: 'id', sort: true, fixed: 'left', width: 80}
+            //     , {field: 'orderTime', title: 'Order Time', sort: true, width: 80}
+            //     , {field: 'recipientAddress', title: 'Recipient\'s Address', edit: 'text'}
+            //     , {field: 'recipient', title: 'Recipient\'s Name', edit: 'text'}
+            //     , {field: 'recipientPhone', title: 'Recipient\'s Phone', edit: 'text'}
+            //     , {field: 'shipperAddress', title: 'Shipper\'s Address', edit: 'text'}
+            //     , {field: 'shipper', title: 'Shipper\'s Name', edit: 'text'}
+            //     , {field: 'shipperPhone', title: 'Shipper\'s Phone', edit: 'text'}
+            //     , {field: 'status', title: 'Status'}
+            //     , {fixed: 'right', title: 'Operations', toolbar: '#barDemo', width: 150}
+            // ]]
+            , cols: [[
+                {field: 'id', title: 'id', sort: true, fixed: 'left', width: 80}
+                , {field: 'orderTime', title: 'Order Time', sort: true, width: 80}
+                , {field: 'recipientAddress', title: 'Recipient\'s Address'}
+                , {field: 'recipient', title: 'Recipient\'s Name'}
+                , {field: 'recipientPhone', title: 'Recipient\'s Phone'}
+                , {field: 'shipperAddress', title: 'Shipper\'s Address'}
+                , {field: 'shipper', title: 'Shipper\'s Name'}
+                , {field: 'shipperPhone', title: 'Shipper\'s Phone'}
+                , {field: 'status', title: 'Status'}
+                , {fixed: 'right', title: 'Operations', toolbar: '#barDemo', width: 150}
+            ]]
+        });
+        table.on('tool(orderTable)', function (obj) {
+            const data = obj.data;
+            console.log(obj)
+            if (obj.event === 'del') {
+                layer.confirm('Please confirm deletion', function (index) {
+                    $.ajax({
+                        url: 'delete-order-by-id',
+                        data: {
+                            'id': data.id,
+                        },
+                        method: 'GET',
+                        traditional: true,
+                        success: function (msg) {
+                            layer.msg(msg);
+                            obj.del();
+                        },
+                        error: function (msg) {
+                            layer.msg(msg)
+                        }
+                    });
+                    layer.close(index);
+                });
+            } else if (obj.event === 'edit') {
+                layer.msg(JSON.stringify("Click the cell to edit"))
+            }
+        });
+    });
+</script>
+</html>

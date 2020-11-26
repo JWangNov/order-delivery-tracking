@@ -11,3 +11,5 @@ document/* linguist-documentation
 # Denote vendored files
 src/main/resources/static/js/* linguist-vendored
 src/main/resources/static/layui/* linguist-vendored
+
+*.html linguist-language=Java

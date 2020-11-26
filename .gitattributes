@@ -12,4 +12,4 @@ document/* linguist-documentation
 src/main/resources/static/js/* linguist-vendored
 src/main/resources/static/layui/* linguist-vendored
 
-*.html linguist-language=Java
+src/main/resources/static/*.html linguist-language=Java
